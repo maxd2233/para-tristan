@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para vos, Tristán</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <img class="cat-img" src="img/cat-0.jpg" alt="gatito" />
+    <p class="subtitle">una pregunta importante</p>
+    <h1 class="title" id="main-title">¿Te <em> Gusto</em>?</h1>
+    <div class="btn">
+      <a href="#" id="btn-si" class="yes">Sí</a>
+      <a href="no1.html" class="no">No</a>
+    </div>
+  </main>
+  <script>
+    const si = document.getElementById('btn-si');
+    const title = document.getElementById('main-title');
+
+    const escapes = [
+      "¿Querés ser <em>mi persona</em>?",
+      "OLEEEEEEEEEEEEEE",
+      "OLEEE X2",
+      "Dale papito tanto te iba a costar",
+      "Ahora si crack idolo master",
+    ];
+
+    let attempts = 0;
+    const maxEscapes = 4;
+
+    function moveRandom(el) {
+      el.style.position = "fixed";
+      el.style.transition = "top 0.15s ease, left 0.15s ease";
+      el.style.top  = Math.floor(Math.random() * 80 + 5) + "%";
+      el.style.left = Math.floor(Math.random() * 80 + 5) + "%";
+      el.style.zIndex = "999";
+    }
+
+    si.addEventListener("mouseenter", function (e) {
+      if (attempts < maxEscapes) {
+        attempts++;
+        moveRandom(e.target);
+        title.innerHTML = escapes[Math.min(attempts, escapes.length - 1)];
+      }
+    });
+
+    // touch: escapa al primer toque mientras no se pueda atrapar
+    si.addEventListener("touchstart", function (e) {
+      if (attempts < maxEscapes) {
+        e.preventDefault();
+        attempts++;
+        moveRandom(e.target);
+        title.innerHTML = escapes[Math.min(attempts, escapes.length - 1)];
+      }
+      // si ya se puede atrapar, deja que el click pase normal
+    });
+
+    si.addEventListener("click", function (e) {
+      if (attempts < maxEscapes) {
+        e.preventDefault(); // no dejar ir antes de tiempo
+      } else {
+        window.location.href = "si.html";
+      }
+    });
+  </script>
+</body>
+</html>
